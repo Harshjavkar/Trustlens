@@ -51,7 +51,8 @@ def ask(question):
     for (sim, c), rep in zip(top5, reps):
         total, parts = score(max(0.0, min(1.0, sim)), c["trust"], rep, recency(c["published"]))
         out.append({"chunk_id": c["id"], "video_id": c["video_id"], "title": c["title"], "creator": c["creator"],
-                    "start": int(c["start"]), "url": f"https://www.youtube.com/watch?v={c['video_id']}&t={int(c['start'])}s",
+                    "start": int(c["start"]),
+                    "url": (f"https://www.instagram.com/p/{c['video_id'].split(':',1)[1]}/" if c['video_id'].startswith('ig:') else f"https://www.youtube.com/watch?v={c['video_id']}&t={int(c['start'])}s"),
                     "quote": quote(c["text"]), "score": round(total, 3),
                     "breakdown": {k: round(v, 3) for k, v in parts.items()}, "report": rep,
                     "warning": "Contradicted by cross-checked evidence" if rep["verdict"] == "contradicted" else None})

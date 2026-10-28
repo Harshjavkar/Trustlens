@@ -73,7 +73,7 @@ def get_digest():
         groups = [{"topic": "New this week", "chunk_ids": list(by_id)}]
     return {"topics": [{"topic": g["topic"], "items": [
         {"chunk_id": i, "title": by_id[i]["title"], "creator": by_id[i]["creator"], "quote": ask_mod.quote(by_id[i]["text"]),
-         "url": f"https://www.youtube.com/watch?v={by_id[i]['video_id']}&t={int(by_id[i]['start'])}s"}
+          "url": (f"https://www.instagram.com/p/{by_id[i]['video_id'].split(':',1)[1]}/" if by_id[i]['video_id'].startswith('ig:') else f"https://www.youtube.com/watch?v={by_id[i]['video_id']}&t={int(by_id[i]['start'])}s")}
         for i in g["chunk_ids"] if i in by_id]} for g in groups]}
 
 

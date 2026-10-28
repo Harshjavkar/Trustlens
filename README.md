@@ -7,7 +7,7 @@
 Built for the **NVIDIA Personal AI Track** hackathon.
 
 ## Problem and Idea
-Feeds make you scroll; they don't tell you what your trusted creators actually said, or whether it holds up. TrustLens lets you pick a few creators, ask a question ("What did X say about Y?"), and get the most relevant video moments (title, creator, timestamp link, short quote), ranked, each with an automatic **Legitimacy Report**.
+Feeds make you scroll; they don't tell you what your trusted creators actually said, or whether it holds up. TrustLens lets you pick a few creators (YouTube or Instagram), ask a question ("What did X say about Y?"), and get the most relevant video/post moments (title, creator, link, short quote), ranked, each with an automatic **Legitimacy Report**.
 
 ## Demo
 <!-- Add GIF / screenshots here: docs/demo.gif -->
