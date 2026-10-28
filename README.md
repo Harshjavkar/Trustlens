@@ -1,5 +1,11 @@
 # TrustLens
 
+## InstaNT creator-chat review prototype
+
+This branch adds [InstaNT in `instant/`](instant/README.md): a standalone web app for natural conversation over a selected Instagram creator's stored evidence. It includes a portable, text-only 11-post caption sample, original source links, a shared creator-job registry, and an OpenRouter-compatible model connection. Follow its README for setup and current limitations. Each local installation supplies its own private API key; the repository contains no working key or downloaded videos.
+
+The existing TrustLens extension/backend remains below. InstaNT is being published separately for review; it has not been integrated into that application or deployed as a public website.
+
 **Ask your trusted YouTube creators. Every answer is cross-checked.**
 
 ![License: MIT](https://img.shields.io/badge/license-MIT-green) ![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue) ![Chrome MV3](https://img.shields.io/badge/Chrome-MV3-yellow)

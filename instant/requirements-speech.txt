@@ -1,0 +1,3 @@
+# Optional local speech recognition. Installation does not download model weights.
+# An actual run may download an uncached named model; --model-path stays offline.
+faster-whisper>=1.1,<2

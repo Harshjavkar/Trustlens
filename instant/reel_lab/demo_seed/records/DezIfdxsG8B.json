@@ -1,0 +1,32 @@
+{
+  "caption": "What if your child’s first investment was in SpaceX? 👀\n\nElon Musk’s reported plan to give SpaceX shares to children in America raises a bigger question about the future of money.\n\nIf AI and robots end up doing most of our jobs, will earning a salary still be enough? Or will owning a piece of the companies creating that wealth become more important?\n\nBecause in a world where machines do the work, owning assets could matter more than earning a paycheck.\n\nWhat do you think?",
+  "creator": "financewithsharan",
+  "duration_seconds": 61.531,
+  "id": "DezIfdxsG8B",
+  "media": [],
+  "processing": {
+    "caption": "complete",
+    "media": "not_retained",
+    "ocr": "missing",
+    "speech": "missing"
+  },
+  "published_at": null,
+  "schema_version": 1,
+  "segments": [
+    {
+      "end_seconds": null,
+      "id": "DezIfdxsG8B:caption:6d1a95a9fe4af288ecb0",
+      "modality": "caption",
+      "start_seconds": null,
+      "text": "What if your child’s first investment was in SpaceX? 👀\n\nElon Musk’s reported plan to give SpaceX shares to children in America raises a bigger question about the future of money.\n\nIf AI and robots end up doing most of our jobs, will earning a salary still be enough? Or will owning a piece of the companies creating that wealth become more important?\n\nBecause in a world where machines do the work, owning assets could matter more than earning a paycheck.\n\nWhat do you think?"
+    }
+  ],
+  "source_media": [
+    {
+      "bytes": 8623657,
+      "sha256": "7e6a5697a72c6eca440617f41edbece5acb2ca0d01faa3992e4cd83c11f057dc"
+    }
+  ],
+  "title": "What if your child’s first investment was in SpaceX?",
+  "url": "https://www.instagram.com/reel/DezIfdxsG8B/"
+}

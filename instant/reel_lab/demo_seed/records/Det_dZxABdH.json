@@ -1,0 +1,32 @@
+{
+  "caption": "Looking for a treat? This festive season, there’s more than one reason to celebrate! \n\nHDFC Bank Festive Treats brings you 10,000+ offers across Cards, Accounts, Loans and EASYEMI. \n\nPlus, explore the HDFC Bank Specialé Savings Account, which comes with a complimentary Platinum Debit Card along with airport lounge access, Locker  Facility, Preferential interest rates on Loans, Attractive  Interest Rate on FDs, Shopping Offers, Taj Epicure membership and much more \n\nComment “Festive Treats” to get the details in your DMs.",
+  "creator": "financewithsharan",
+  "duration_seconds": 82.289,
+  "id": "Det_dZxABdH",
+  "media": [],
+  "processing": {
+    "caption": "complete",
+    "media": "not_retained",
+    "ocr": "missing",
+    "speech": "missing"
+  },
+  "published_at": null,
+  "schema_version": 1,
+  "segments": [
+    {
+      "end_seconds": null,
+      "id": "Det_dZxABdH:caption:fd24ce0cd1cee2de6da1",
+      "modality": "caption",
+      "start_seconds": null,
+      "text": "Looking for a treat? This festive season, there’s more than one reason to celebrate! \n\nHDFC Bank Festive Treats brings you 10,000+ offers across Cards, Accounts, Loans and EASYEMI. \n\nPlus, explore the HDFC Bank Specialé Savings Account, which comes with a complimentary Platinum Debit Card along with airport lounge access, Locker  Facility, Preferential interest rates on Loans, Attractive  Interest Rate on FDs, Shopping Offers, Taj Epicure membership and much more \n\nComment “Festive Treats” to get the details in your DMs."
+    }
+  ],
+  "source_media": [
+    {
+      "bytes": 10548058,
+      "sha256": "7379236c547b73121a916fe34297986e33b3a426d18a9e3b0cedbe1bcc8cf31b"
+    }
+  ],
+  "title": "Looking for a treat?",
+  "url": "https://www.instagram.com/reel/Det_dZxABdH/"
+}

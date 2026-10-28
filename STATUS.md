@@ -1,4 +1,10 @@
 # STATUS
+
+## InstaNT review addition (2026-10-29)
+
+The `instant/` app is a separate review prototype with bundled caption evidence and a server-side model connection. It is not integrated into the extension/backend described below. Read its [setup and limitations](instant/README.md) and [validation record](instant/docs/validation.md). Public deployment, reliable automatic profile discovery, real speech/OCR extraction and full answer-quality evaluation remain pending. No credentials or raw videos are included.
+
+## Original TrustLens status
 **Progress: 1/7 steps done; 6/7 code-complete, awaiting live verification** (no network or API keys in the authoring sandbox)
 
 | # | Step | Status |

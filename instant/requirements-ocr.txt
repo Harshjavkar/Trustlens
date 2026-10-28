@@ -1,0 +1,3 @@
+# Optional; recognition runs locally using bundled ONNX models.
+rapidocr-onnxruntime>=1.4.4,<2
+opencv-python-headless>=4.10,<5

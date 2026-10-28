@@ -30,3 +30,9 @@ Follow-up: not tested against a real sandbox.
 ## 2026-10-28 - Step 7: Docs and cleanup
 Files: README.md, docs/architecture.md, CLAUDE.md, STATUS.md.
 Verification: py_compile on all Python, JSON check on manifest; logic test (not shipped) with stubbed LLM/search/HTTP confirmed ranking, contradicted-last, invented-URL filtering, 25-word reason cap, claim cache, memory writes.
+
+## 2026-10-29 - InstaNT standalone review prototype
+
+Added `instant/` as an isolated Python web app with creator-scoped evidence records/search, natural OpenRouter/Nemotron conversation, source citations, a shared creator-job lifecycle and optional yt-dlp/speech/OCR processing. A bundled text-only caption seed and first-run bootstrap support a fresh checkout; private keys, downloaded media, environments, model files and local history are excluded.
+
+The original extension/backend remains unchanged. Three limited live model checks previously succeeded; one follow-up omitted its citation, so answer quality remains under review. Portable build and final test results are recorded in `instant/docs/validation.md`. Publishing this branch does not deploy a judging website.

@@ -2,6 +2,8 @@
 Read at the start of every session. Update on any change. Keep < 150 lines.
 
 ## Goal
+Review branch addition: `instant/` contains the standalone InstaNT creator-chat prototype. Read its README for the portable Python setup, bundled text-only seed and limitations. Its `INSTANT_CHAT_*` settings are separate from the original backend's `LLM_*` settings. Never commit `.env.local`, raw media, model caches or personal chats. The original extension/backend is preserved; do not imply they were integrated or revalidated by the InstaNT work.
+
 Chrome MV3 extension + local FastAPI backend for the NVIDIA Personal AI Track hackathon. User picks trusted YouTube creators, asks a question, gets ranked video moments (title, creator, timestamp link, quote <=15 words), each with an automatic Legitimacy Report. Repo is public: docs must be professional. Keep code minimal, replies short, no unrequested features or tests.
 
 ## Stack

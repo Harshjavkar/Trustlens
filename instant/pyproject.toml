@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "instagram-reel-lab"
+version = "0.2.0"
+description = "Local creator evidence library, cited answers, speech and sampled OCR"
+requires-python = ">=3.11"
+dependencies = ["yt-dlp>=2026.3.17", "imageio-ffmpeg>=0.6,<1"]
+
+[project.optional-dependencies]
+speech = ["faster-whisper>=1.1,<2"]
+ocr = ["rapidocr-onnxruntime>=1.4.4,<2", "opencv-python-headless>=4.10,<5"]
+
+[project.scripts]
+reel-lab = "reel_lab.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["reel_lab*"]
+
+[tool.setuptools.package-data]
+reel_lab = ["web/*.html", "web/*.css", "web/*.js", "demo_seed/records/*.json"]
