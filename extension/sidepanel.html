@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>TrustLens</title>
+  <style>
+    body { font: 13px system-ui, sans-serif; margin: 10px; color: #1b1b1b; }
+    h3 { margin: 12px 0 6px; }
+    input, button { font: inherit; padding: 5px; }
+    input[type=text] { width: 100%; box-sizing: border-box; margin-bottom: 4px; }
+    .card { border: 1px solid #ddd; border-radius: 8px; padding: 8px; margin: 8px 0; }
+    .card.bad { border-color: #c62828; background: #fff5f5; }
+    .badge { color: #fff; border-radius: 10px; padding: 1px 8px; font-size: 11px; }
+    .supported { background: #2e7d32; } .mixed { background: #ef8f00; } .contradicted { background: #c62828; }
+    .insufficient { background: #757575; } .opinion { background: #1565c0; }
+    .chip { background: #fff3cd; border-radius: 10px; padding: 1px 7px; font-size: 11px; margin-right: 4px; }
+    .warn { color: #c62828; font-weight: 600; }
+    .meta, summary { color: #555; font-size: 12px; }
+    blockquote { margin: 6px 0; padding-left: 8px; border-left: 3px solid #ccc; }
+    #status { color: #555; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h3>Add creator</h3>
+  <input id="url" type="text" placeholder="https://www.youtube.com/@channel">
+  <label>Trust: <input id="trust" type="range" min="1" max="5" value="3"> <span id="trustv">3</span></label>
+  <button id="add">Add</button>
+
+  <h3>Ask</h3>
+  <input id="q" type="text" placeholder="What did X say about Y?">
+  <button id="ask">Ask</button>
+  <div id="status"></div>
+  <div id="results"></div>
+
+  <h3>Settings</h3>
+  <input id="backend" type="text" placeholder="Backend URL (default http://localhost:8000)">
+  <script src="sidepanel.js"></script>
+</body>
+</html>

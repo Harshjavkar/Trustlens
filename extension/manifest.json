@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "TrustLens",
+  "version": "0.1.0",
+  "description": "Ask your trusted YouTube creators. Every answer is cross-checked.",
+  "permissions": ["sidePanel", "storage", "alarms"],
+  "host_permissions": ["http://localhost:8000/*", "http://127.0.0.1:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "side_panel": { "default_path": "sidepanel.html" },
+  "action": { "default_title": "TrustLens" }
+}

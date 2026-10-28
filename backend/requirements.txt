@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+httpx
+openai
+numpy
+python-dotenv
+youtube-transcript-api
