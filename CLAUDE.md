@@ -10,10 +10,10 @@ Chrome MV3 extension + local FastAPI backend for the NVIDIA Personal AI Track ha
 Vanilla JS extension (side panel, chrome.alarms 6h). Python FastAPI. SQLite + numpy cosine (no sqlite-vec). youtube-transcript-api + channel RSS. Tavily/Brave search. OpenAI-compatible LLM (Nemotron on Nebius); optional Hermes agent at AGENT_URL (falls back to direct).
 
 ## Folder map
-extension/ (manifest, sidepanel.html/js, background.js) · backend/ (main, llm, ingest, ask, verify, db, requirements) · skills/ (4 md) · docs/architecture.md · scripts/seed.py · README/LICENSE/.env.example/.gitignore
+extension/ (manifest, sidepanel.html/js, background.js, icons/) · backend/ (main, llm, ingest, ask, verify, db, requirements) · skills/ (4 md) · docs/architecture.md · scripts/seed.py · README/LICENSE/.env.example/.gitignore
 
 ## Architecture
-main.py routes -> ingest.py (creators, RSS, transcripts, 60s chunks, embeddings) / ask.py (top-20 cosine, LLM rerank to 5, parallel verify.report, score) / verify.py (extract_claim, gather_evidence, judge, red_flags, claim-hash cache). llm.py is the only model interface. db.py is all SQL helpers.
+main.py routes (GET /health, GET /creators, POST /creators, POST /ingest, POST /ask, POST /verify, GET /digest, POST /feedback) -> ingest.py (creators, RSS, transcripts, 60s chunks, embeddings) / ask.py (top-20 cosine, LLM rerank to 5, parallel verify.report, score) / verify.py (extract_claim, gather_evidence, judge, red_flags, claim-hash cache). llm.py is the only model interface (validates config on first use). db.py is all SQL helpers.
 
 ## Conventions
 Spec wording: "cross-checked", never "guaranteed true". Never invent URLs; judge output is filtered to retrieved evidence. Minimal code. Update CLAUDE.md, DEVELOPMENT.md, STATUS.md after every step. Never mark Done unless it runs.
@@ -35,7 +35,7 @@ LLM_BASE_URL, LLM_API_KEY, LLM_MODEL, EMBED_MODEL, AGENT_URL, AGENT_API_KEY, SEA
 - Extension host_permissions only cover localhost:8000.
 
 ## Status summary
-All 7 steps written. Core logic (chunking, ranking, verdicts, URL filtering, caching, memory) verified with stubbed LLM/search. See STATUS.md.
+All 7 steps written. Extension UI overhauled (premium dark theme, tabs, digest viewer, settings panel, icons). Backend polished with /health, GET /creators, logging, and config validation. Missing youtube-transcript-api added to requirements. Code compiles clean. Live verification still pending. See STATUS.md.
 
 ## Next steps
 1. Install deps, fill .env, run backend and `scripts/seed.py`.

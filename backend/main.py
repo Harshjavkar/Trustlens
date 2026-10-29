@@ -1,13 +1,16 @@
 """TrustLens API. Run: uvicorn main:app --reload (from backend/)."""
-import json, time
+import json, time, logging
 from typing import Literal
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 import ask as ask_mod, db, ingest, llm, verify
 
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger("trustlens")
+
 db.init()
-app = FastAPI(title="TrustLens")
+app = FastAPI(title="TrustLens", description="Cross-checked answers from your trusted creators")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 
@@ -33,6 +36,17 @@ class FeedbackIn(BaseModel):
     vote: Literal["up", "down"]
 
 
+@app.get("/health")
+def health():
+    return {"status": "ok", "creators": len(db.q("SELECT id FROM creators")),
+            "chunks": len(db.q("SELECT id FROM chunks"))}
+
+
+@app.get("/creators")
+def list_creators():
+    return db.q("SELECT id, channel_id, name, url, trust FROM creators ORDER BY name")
+
+
 @app.post("/creators")
 def post_creator(b: CreatorIn):
     try:
@@ -48,7 +62,10 @@ def post_ingest(b: IngestIn = IngestIn()):
 
 @app.post("/ask")
 def post_ask(b: AskIn):
-    return {"results": ask_mod.ask(b.q)}
+    log.info("Ask: %s", b.q[:100])
+    results = ask_mod.ask(b.q)
+    log.info("Ask returned %d results", len(results))
+    return {"results": results}
 
 
 @app.post("/verify")

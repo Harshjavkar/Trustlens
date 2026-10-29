@@ -16,7 +16,7 @@
 | reports | cached judge output keyed by SHA-256 of the normalized claim |
 
 ## Endpoints
-`POST /creators`, `POST /ingest`, `POST /ask`, `POST /verify`, `GET /digest`, `POST /feedback`.
+`GET /health`, `GET /creators`, `POST /creators`, `POST /ingest`, `POST /ask`, `POST /verify`, `GET /digest`, `POST /feedback`.
 
 ## Ask flow
 1. Embed question; cosine over all chunks; top 20.

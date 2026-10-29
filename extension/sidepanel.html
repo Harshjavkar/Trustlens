@@ -1,39 +1,598 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <title>TrustLens</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
-    body { font: 13px system-ui, sans-serif; margin: 10px; color: #1b1b1b; }
-    h3 { margin: 12px 0 6px; }
-    input, button { font: inherit; padding: 5px; }
-    input[type=text] { width: 100%; box-sizing: border-box; margin-bottom: 4px; }
-    .card { border: 1px solid #ddd; border-radius: 8px; padding: 8px; margin: 8px 0; }
-    .card.bad { border-color: #c62828; background: #fff5f5; }
-    .badge { color: #fff; border-radius: 10px; padding: 1px 8px; font-size: 11px; }
-    .supported { background: #2e7d32; } .mixed { background: #ef8f00; } .contradicted { background: #c62828; }
-    .insufficient { background: #757575; } .opinion { background: #1565c0; }
-    .chip { background: #fff3cd; border-radius: 10px; padding: 1px 7px; font-size: 11px; margin-right: 4px; }
-    .warn { color: #c62828; font-weight: 600; }
-    .meta, summary { color: #555; font-size: 12px; }
-    blockquote { margin: 6px 0; padding-left: 8px; border-left: 3px solid #ccc; }
-    #status { color: #555; font-size: 12px; }
+    :root {
+      --bg: #0f1117;
+      --bg-card: rgba(22, 27, 45, 0.85);
+      --bg-card-hover: rgba(30, 37, 60, 0.95);
+      --bg-input: rgba(30, 35, 55, 0.9);
+      --border: rgba(99, 115, 170, 0.18);
+      --border-active: rgba(120, 140, 255, 0.45);
+      --text: #e4e6f0;
+      --text-dim: #8b90a8;
+      --text-muted: #5d6280;
+      --accent: #7c8aff;
+      --accent-glow: rgba(124, 138, 255, 0.25);
+      --green: #34d399;
+      --amber: #fbbf24;
+      --red: #f87171;
+      --blue: #60a5fa;
+      --purple: #a78bfa;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 13px;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Header ── */
+    .header {
+      background: linear-gradient(135deg, rgba(124,138,255,0.12) 0%, rgba(160,100,255,0.08) 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 14px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(20px);
+    }
+    .header h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline;
+    }
+    .header .tag {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.8px;
+      text-transform: uppercase;
+      color: var(--accent);
+      border: 1px solid rgba(124,138,255,0.3);
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 6px;
+      vertical-align: middle;
+    }
+    .header .subtitle {
+      display: block;
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* ── Tabs ── */
+    .tabs {
+      display: flex;
+      gap: 2px;
+      padding: 8px 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      flex: 1;
+      padding: 8px 0;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-dim);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
+
+    /* ── Panels ── */
+    .panel {
+      display: none;
+      padding: 14px;
+      animation: fadeIn 0.25s ease-out;
+    }
+    .panel.active { display: block; }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Form controls ── */
+    label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    input[type="text"], input[type="url"] {
+      width: 100%;
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 13px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    input:focus {
+      border-color: var(--border-active);
+      box-shadow: 0 0 0 3px var(--accent-glow);
+    }
+    input::placeholder { color: var(--text-muted); }
+
+    /* ── Trust slider ── */
+    .trust-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 10px 0;
+    }
+    .trust-row label { margin: 0; flex-shrink: 0; }
+    input[type="range"] {
+      flex: 1;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 4px;
+      background: linear-gradient(to right, var(--red), var(--amber), var(--green));
+      border-radius: 4px;
+      outline: none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--text);
+      box-shadow: 0 0 6px rgba(0,0,0,0.5);
+      cursor: pointer;
+    }
+    .trust-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 18px;
+      text-align: center;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px 16px;
+      font: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent) 0%, #6366f1 100%);
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.2s, opacity 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px var(--accent-glow);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .btn-sm {
+      width: auto;
+      padding: 5px 10px;
+      font-size: 11px;
+      border-radius: 6px;
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--accent);
+      border: 1px solid var(--border);
+    }
+    .btn-ghost:hover {
+      background: var(--accent-glow);
+      box-shadow: none;
+    }
+
+    .section { margin-bottom: 16px; }
+    .section-title {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 10px;
+    }
+    .form-gap { margin-top: 10px; }
+
+    /* ── Status ── */
+    #status {
+      font-size: 12px;
+      color: var(--text-dim);
+      padding: 6px 0;
+      min-height: 20px;
+    }
+    #status.error { color: var(--red); }
+    #status.success { color: var(--green); }
+
+    /* ── Spinner ── */
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── Result cards ── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 10px;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      animation: slideUp 0.3s ease-out both;
+    }
+    .card:hover {
+      border-color: var(--border-active);
+      background: var(--bg-card-hover);
+      transform: translateY(-1px);
+    }
+    .card.contradicted {
+      border-color: rgba(248, 113, 113, 0.35);
+      background: rgba(60, 20, 25, 0.5);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-warn {
+      color: var(--red);
+      font-weight: 600;
+      font-size: 12px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.35;
+    }
+    .card-meta {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+    .card-quote {
+      margin: 8px 0;
+      padding: 6px 10px;
+      border-left: 3px solid var(--accent);
+      background: rgba(124, 138, 255, 0.06);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-style: italic;
+      color: var(--text-dim);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .card-link:hover { color: #fff; }
+
+    /* ── Badges ── */
+    .badge-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 10px;
+      color: #fff;
+    }
+    .badge.supported    { background: #059669; }
+    .badge.mixed        { background: #d97706; }
+    .badge.contradicted { background: #dc2626; }
+    .badge.insufficient { background: #6b7280; }
+    .badge.opinion      { background: #2563eb; }
+
+    .confidence {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .chip {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 500;
+      color: #fbbf24;
+      background: rgba(251, 191, 36, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.2);
+      border-radius: 10px;
+      padding: 1px 7px;
+    }
+    .card-reason {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      line-height: 1.4;
+    }
+
+    /* ── Evidence details ── */
+    details {
+      margin-top: 8px;
+    }
+    summary {
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      padding: 4px 0;
+      transition: color 0.15s;
+    }
+    summary:hover { color: var(--text-dim); }
+    .ev-claim {
+      font-size: 11px;
+      color: var(--text-dim);
+      padding: 6px 0 4px;
+    }
+    .ev-list {
+      list-style: none;
+      padding: 0;
+    }
+    .ev-list li {
+      font-size: 11px;
+      color: var(--text-dim);
+      padding: 3px 0;
+      border-top: 1px solid var(--border);
+    }
+    .ev-list a {
+      color: var(--accent);
+      text-decoration: none;
+      word-break: break-all;
+    }
+    .ev-list a:hover { text-decoration: underline; }
+
+    /* ── Vote buttons ── */
+    .vote-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .vote-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 4px 10px;
+      font: inherit;
+      font-size: 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s, color 0.15s;
+    }
+    .vote-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--border-active);
+      color: var(--text);
+    }
+    .vote-feedback {
+      font-size: 11px;
+      color: var(--green);
+      align-self: center;
+    }
+
+    /* ── Score bar ── */
+    .score-bar-wrap {
+      margin-top: 6px;
+    }
+    .score-bar-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .score-bar {
+      height: 4px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .score-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      transition: width 0.4s ease-out;
+    }
+
+    /* ── Creator list ── */
+    .creator-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 6px;
+    }
+    .creator-name { font-weight: 600; font-size: 13px; }
+    .creator-trust {
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+
+    /* ── Digest ── */
+    .digest-topic {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--purple);
+      margin: 14px 0 6px;
+    }
+    .digest-item {
+      padding: 8px 10px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 6px;
+    }
+
+    /* ── Empty state ── */
+    .empty {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+    .empty-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    .empty-text {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ── Settings ── */
+    .setting-group {
+      margin-bottom: 16px;
+    }
+    .setting-note {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ── Scrollbar ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
   </style>
 </head>
 <body>
-  <h3>Add creator</h3>
-  <input id="url" type="text" placeholder="https://www.youtube.com/@channel or https://www.instagram.com/username">
-  <label>Trust: <input id="trust" type="range" min="1" max="5" value="3"> <span id="trustv">3</span></label>
-  <button id="add">Add</button>
 
-  <h3>Ask</h3>
-  <input id="q" type="text" placeholder="What did X say about Y?">
-  <button id="ask">Ask</button>
-  <div id="status"></div>
-  <div id="results"></div>
+  <div class="header">
+    <h1>TrustLens</h1><span class="tag">Beta</span>
+    <span class="subtitle">Cross-checked answers from your trusted creators</span>
+  </div>
 
-  <h3>Settings</h3>
-  <input id="backend" type="text" placeholder="Backend URL (default http://localhost:8000)">
+  <div class="tabs">
+    <button class="tab active" data-panel="ask-panel">🔍 Ask</button>
+    <button class="tab" data-panel="digest-panel">📰 Digest</button>
+    <button class="tab" data-panel="settings-panel">⚙ Settings</button>
+  </div>
+
+  <!-- ═══ Ask Panel ═══ -->
+  <div id="ask-panel" class="panel active">
+
+    <div class="section">
+      <div class="section-title">Add a Creator</div>
+      <label for="url">Channel URL</label>
+      <input id="url" type="url" placeholder="https://youtube.com/@channel or instagram.com/user">
+      <div class="trust-row">
+        <label>Trust</label>
+        <input id="trust" type="range" min="1" max="5" value="3">
+        <span id="trustv" class="trust-val">3</span>
+      </div>
+      <button id="add" class="btn btn-ghost">＋ Add &amp; Ingest</button>
+    </div>
+
+    <div class="section">
+      <div class="section-title">Ask Your Creators</div>
+      <input id="q" type="text" placeholder='e.g. "What did Veritasium say about nuclear energy?"'>
+      <div class="form-gap">
+        <button id="ask" class="btn">🔍 Search &amp; Cross-Check</button>
+      </div>
+    </div>
+
+    <div id="status"></div>
+    <div id="results"></div>
+  </div>
+
+  <!-- ═══ Digest Panel ═══ -->
+  <div id="digest-panel" class="panel">
+    <div class="section">
+      <div class="section-title">This Week's Digest</div>
+      <button id="load-digest" class="btn btn-ghost">📰 Load Weekly Digest</button>
+    </div>
+    <div id="digest-status"></div>
+    <div id="digest-results"></div>
+  </div>
+
+  <!-- ═══ Settings Panel ═══ -->
+  <div id="settings-panel" class="panel">
+    <div class="section-title">Configuration</div>
+
+    <div class="setting-group">
+      <label for="backend">Backend URL</label>
+      <input id="backend" type="text" placeholder="http://localhost:8000">
+      <div class="setting-note">The FastAPI backend address. Default: http://localhost:8000</div>
+    </div>
+
+    <div class="setting-group">
+      <div class="section-title">Your Creators</div>
+      <div id="creator-list"></div>
+      <button id="refresh-creators" class="btn btn-ghost btn-sm" style="margin-top:6px">↻ Refresh</button>
+    </div>
+
+    <div class="setting-group">
+      <div class="section-title">Re-Ingest</div>
+      <button id="reingest" class="btn btn-ghost">⟳ Ingest Latest Videos</button>
+      <div id="ingest-status" style="margin-top:6px;font-size:12px;color:var(--text-dim)"></div>
+    </div>
+  </div>
+
   <script src="sidepanel.js"></script>
 </body>
 </html>

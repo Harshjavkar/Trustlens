@@ -36,3 +36,18 @@ Verification: py_compile on all Python, JSON check on manifest; logic test (not 
 Added `instant/` as an isolated Python web app with creator-scoped evidence records/search, natural OpenRouter/Nemotron conversation, source citations, a shared creator-job lifecycle and optional yt-dlp/speech/OCR processing. A bundled text-only caption seed and first-run bootstrap support a fresh checkout; private keys, downloaded media, environments, model files and local history are excluded.
 
 The original extension/backend remains unchanged. Three limited live model checks previously succeeded; one follow-up omitted its citation, so answer quality remains under review. Portable build and final test results are recorded in `instant/docs/validation.md`. Publishing this branch does not deploy a judging website.
+
+## 2026-10-29 - Extension UI overhaul and backend polish
+Files: extension/{sidepanel.html, sidepanel.js, manifest.json, icons/}, backend/{main.py, llm.py, requirements.txt}, .env.example, scripts/seed.py, docs/architecture.md.
+Changes:
+- **Extension UI**: Complete redesign with premium dark glassmorphic theme, tab navigation (Ask/Digest/Settings), loading spinners, score bars, empty states, animated cards, keyboard support (Enter to ask).
+- **New endpoints**: `GET /health` (server status), `GET /creators` (list all creators).
+- **Digest viewer**: Extension now has a dedicated Digest tab that calls `GET /digest`.
+- **Settings panel**: Shows creator list, backend URL config, and re-ingest button.
+- **Extension icons**: Generated 16/48/128px icons with magnifying glass + shield motif.
+- **Backend**: Added logging, LLM config validation with helpful error messages.
+- **requirements.txt**: Added missing `youtube-transcript-api`, upgraded to `uvicorn[standard]`.
+- **.env.example**: Expanded with comments, alternative model suggestions, API key links.
+- **seed.py**: Rewritten with health check, progress messages, and error handling.
+- Manifest bumped to v0.2.0.
+

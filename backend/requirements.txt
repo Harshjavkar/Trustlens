@@ -1,7 +1,8 @@
 fastapi
-uvicorn
+uvicorn[standard]
 httpx
 openai
 numpy
 python-dotenv
 instaloader
+youtube-transcript-api

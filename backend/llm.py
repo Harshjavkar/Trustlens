@@ -1,6 +1,7 @@
 """Single OpenAI-compatible interface. Routes chat through the Hermes agent (AGENT_URL) if set, else the LLM directly."""
 import json, os, re
 from dotenv import load_dotenv
+# pyrefly: ignore[missing-import]
 from openai import OpenAI
 
 load_dotenv()
@@ -12,7 +13,11 @@ def _client(kind):
         if kind == "agent":
             _clients[kind] = OpenAI(base_url=os.environ["AGENT_URL"], api_key=os.getenv("AGENT_API_KEY") or "none")
         else:
-            _clients[kind] = OpenAI(base_url=os.getenv("LLM_BASE_URL"), api_key=os.getenv("LLM_API_KEY") or "none")
+            base = os.getenv("LLM_BASE_URL")
+            key = os.getenv("LLM_API_KEY")
+            if not base:
+                raise RuntimeError("LLM_BASE_URL not set. Copy .env.example to .env and fill in your keys.")
+            _clients[kind] = OpenAI(base_url=base, api_key=key or "none")
     return _clients[kind]
 
 

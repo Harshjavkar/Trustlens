@@ -118,7 +118,7 @@ Set up Hermes inside an NVIDIA NemoClaw/OpenShell sandbox following the [NVIDIA 
 ```
 trustlens/
 ├─ CLAUDE.md, DEVELOPMENT.md, STATUS.md, README.md, LICENSE, .gitignore, .env.example
-├─ extension/  manifest.json, sidepanel.html, sidepanel.js, background.js
+├─ extension/  manifest.json, sidepanel.html, sidepanel.js, background.js, icons/
 ├─ backend/    main.py, llm.py, ingest.py, ask.py, verify.py, db.py, requirements.txt
 ├─ skills/     ingest_creator.md, ask.md, verify_claim.md, weekly_digest.md
 ├─ docs/       architecture.md
